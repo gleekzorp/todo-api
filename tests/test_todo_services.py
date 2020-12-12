@@ -19,7 +19,10 @@ def test_add_todo():
 
 
 def test_get_all_todos():
-    pytest.xfail()
+    response = requests.get(f'{BASE_URL}/get-all-todos')
+    response_data = response.json()
+    assert response.ok
+    assert isinstance(response_data, list)
 
 
 def test_delete_todo():
