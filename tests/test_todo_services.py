@@ -21,12 +21,17 @@ def test_add_todo():
 def test_get_all_todos():
     response = requests.get(f'{BASE_URL}/get-all-todos')
     response_data = response.json()
+    print(response_data)
     assert response.ok
     assert isinstance(response_data, list)
 
 
 def test_delete_todo():
-    pytest.xfail()
+    todo_id = 1
+    response = requests.delete(f'{BASE_URL}/delete-todo/{todo_id}')
+    response_data = response.json()
+    assert response.ok
+    assert response_data['message'] == f'Deleted Todo with id of {todo_id}'
 
 
 def test_mark_todo_complete():

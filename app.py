@@ -48,6 +48,17 @@ def get_all_todos():
     return jsonify(result)
 
 
+@app.route('/api/v1/delete-todo/<todo_id>', methods=['DELETE'])
+def delete_todo(todo_id):
+    todo = Todo.query.get(todo_id)
+    if todo:
+        db.session.delete(todo)
+        db.session.commit()
+        return jsonify(message=f'Deleted Todo with id of {todo_id}')
+    else:
+        return jsonify(message=f'Sorry, no todo with that id exists')
+
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
