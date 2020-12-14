@@ -38,7 +38,6 @@ def test_mark_todo_complete():
     assert response_data == payload
 
 
-
 def test_delete_todo():
     todo_id = 1
     response = requests.delete(f'{BASE_URL}/delete-todo/{todo_id}')
@@ -48,4 +47,7 @@ def test_delete_todo():
 
 
 def test_delete_all_todos_marked_complete():
-    pytest.xfail()
+    response = requests.delete(f'{BASE_URL}/delete-all-todos-marked-complete')
+    response_data = response.json()
+    assert response.ok
+    assert response_data['message'] == "Todos Deleted"

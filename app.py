@@ -85,6 +85,18 @@ def delete_todo(todo_id):
         return jsonify(message=f'Sorry, no todo with that id exists')
 
 
+@app.route('/api/v1/delete-all-todos-marked-complete', methods=["DELETE"])
+def delete_all_todos_marked_complete():
+    completed_todos_list = Todo.query.filter_by(done=True).all()
+    if completed_todos_list:
+        for todo in completed_todos_list:
+            db.session.delete(todo)
+            db.session.commit()
+        return jsonify(message="Todos Deleted")
+    else:
+        return jsonify(message="No todos are marked complete")
+
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
