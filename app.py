@@ -30,15 +30,18 @@ def hello_world():
 
 @app.route('/api/v1/add-todo', methods=['POST'])
 def add_todo():
-    title = request.json['title']
-    done = request.json['done']
+    try:
+        title = request.json['title']
+        done = request.json['done']
 
-    new_todo = Todo(title=title, done=done)
-    db.session.add(new_todo)
-    db.session.commit()
-    todo = Todo.query.get(new_todo.id)
+        new_todo = Todo(title=title, done=done)
+        db.session.add(new_todo)
+        db.session.commit()
+        todo = Todo.query.get(new_todo.id)
 
-    return todo_schema.jsonify(todo)
+        return todo_schema.jsonify(todo)
+    except KeyError as keyName:
+        return jsonify(message=f'KeyError: I was looking for {keyName}')
 
 
 @app.route('/api/v1/get-all-todos', methods=['GET'])
