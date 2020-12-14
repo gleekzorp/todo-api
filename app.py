@@ -48,6 +48,32 @@ def get_all_todos():
     return jsonify(result)
 
 
+@app.route('/api/v1/mark-complete', methods=["PUT"])
+def mark_complete():
+    try:
+        todo = Todo.query.get(request.json['id'])
+        if todo:
+            todo.done = request.json['done']
+            db.session.commit()
+            return todo_schema.jsonify(todo)
+        else:
+            return jsonify(message=f'Sorry, no todo with that id exists')
+    except KeyError as keyName:
+        return jsonify(message=f'KeyError: I was looking for {keyName}')
+
+    # OR
+
+    # try:
+    #     todo = Todo.query.get(request.json['id'])
+    #     todo.done = request.json['done']
+    #     db.session.commit()
+    #     return todo_schema.jsonify(todo)
+    # except KeyError as error:
+    #     return jsonify(message=f'KeyError: I was looking for {error}')
+    # except AttributeError:
+    #     return jsonify(message=f'Sorry, no todo with that id exists')
+
+
 @app.route('/api/v1/delete-todo/<todo_id>', methods=['DELETE'])
 def delete_todo(todo_id):
     todo = Todo.query.get(todo_id)

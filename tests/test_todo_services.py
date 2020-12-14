@@ -26,16 +26,25 @@ def test_get_all_todos():
     assert isinstance(response_data, list)
 
 
+def test_mark_todo_complete():
+    payload = {
+        "id": 1,
+        "title": "Clean room",
+        "done": True
+    }
+    response = requests.put(f'{BASE_URL}/mark-complete', json=payload)
+    response_data = response.json()
+    assert response.ok
+    assert response_data == payload
+
+
+
 def test_delete_todo():
     todo_id = 1
     response = requests.delete(f'{BASE_URL}/delete-todo/{todo_id}')
     response_data = response.json()
     assert response.ok
     assert response_data['message'] == f'Deleted Todo with id of {todo_id}'
-
-
-def test_mark_todo_complete():
-    pytest.xfail()
 
 
 def test_delete_all_todos_marked_complete():
