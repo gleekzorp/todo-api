@@ -16,3 +16,7 @@ def test_setup_blank_db_test_file(setup_blank_db_test_file):
     assert response.ok
     assert len(response_data) == 0
     assert os.path.exists('../db_test.sqlite') is True
+
+
+def test_setup_test_data(setup_blank_db_test_file, setup_test_data):
+    assert len(setup_test_data) is 4
