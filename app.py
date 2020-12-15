@@ -99,7 +99,7 @@ def delete_all_todos_marked_complete():
     if completed_todos_list:
         for todo in completed_todos_list:
             db.session.delete(todo)
-            db.session.commit()
+        db.session.commit()
         return jsonify(message="Todos Deleted")
     else:
         return jsonify(message="No todos are marked complete")
