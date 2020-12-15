@@ -133,3 +133,4 @@ dmypy.json
 # Project Specific
 test_results
 db.sqlite
+db_test.sqlite
